@@ -104,10 +104,10 @@ class CCXTStore(with_metaclass(MetaSingleton, object)):
         self.debug = debug
         balance = self.exchange.fetch_balance() if 'secret' in config else 0
 
-        if balance == 0 or not balance['free'][currency]:
+        if balance == 0 or not balance['free']['USD']:
             self._cash = 0
         else:
-            self._cash = balance['free'][currency]
+            self._cash = balance['free']['USD']
 
         if balance == 0 or not balance['total'][currency]:
             self._value = 0
@@ -155,7 +155,7 @@ class CCXTStore(with_metaclass(MetaSingleton, object)):
     def get_balance(self):
         balance = self.exchange.fetch_balance()
 
-        cash = balance['free'][self.currency]
+        cash = balance['free']['USD']
         value = balance['total'][self.currency]
         # Fix if None is returned
         self._cash = cash if cash else 0
